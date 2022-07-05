@@ -123,24 +123,10 @@ void loop()
         statePerson = 1;
         contPerson++;
 
-        // Serial.print("Personas = ");
-        // Serial.println(contPerson);
-
         // compose the data
         dataRandGenerator();
 
-        temp_env = String(temp_env_val, 1);
-        mois_env = String(mois_env_val, 1);
-        typeSample = String(T_EVENT);
-        noise_env = String(noise_env_val, 1);
-        distance = '[' + String(distance_val, 1) + ',' + String(temp_dist_val, 1) + ']';
-        people_count = String(people_count_val, 0);
-
-        RaspberryChain = place + ';' + monitor + ';' + typeSample + ';' +
-                         temp_env + ';' + mois_env + ';' + noise_env + ';' +
-                         distance + ';' + people_count + "\r\n";
-
-        Serial.print(RaspberryChain);
+        Serial.println("event");
     }
     else if (digitalRead(PIR_SENSOR) == LOW)
     {
@@ -153,29 +139,79 @@ void loop()
 
         // generate data random to test communication
         dataRandGenerator();
-
-        // compose the data
-
-        temp_env = String(temp_env_val, 1);
-        mois_env = String(mois_env_val, 1);
-        typeSample = String(T_SAMPLE);
-        noise_env = String(noise_env_val, 1);
-        distance = '[' + String(distance_val, 1) + ',' + String(temp_dist_val, 1) + ']';
-        people_count = String(people_count_val, 0);
-
-        RaspberryChain = place + ';' + monitor + ';' + typeSample + ';' +
-                         temp_env + ';' + mois_env + ';' + noise_env + ';' +
-                         distance + ';' + people_count + "\r\n";
-
-        Serial.print(RaspberryChain);
-
-        contPerson = 0;
     }
 }
 
 /* ********************************************************************
  * **** INTERRUPTIONS
  * ********************************************************************/
+
+// serialEvent function
+// @param: void
+// @return: void
+void serialEvent(void)
+{
+    while (Serial.available())
+    {
+        // String dataIn = Serial.readStringUntil(';');
+        char commandRx = (char)Serial.read();
+
+        switch (commandRx)
+        {
+        case READ_SAMPLE_CMD:
+            /* code */
+
+            // compose the data
+
+            temp_env = String(temp_env_val, 1);
+            mois_env = String(mois_env_val, 1);
+            typeSample = String(T_SAMPLE);
+            noise_env = String(noise_env_val, 1);
+            distance = '[' + String(distance_val, 1) + ',' + String(temp_dist_val, 1) + ']';
+            people_count = String(people_count_val, 1);
+
+            RaspberryChain = place + ';' + monitor + ';' + typeSample + ';' +
+                             temp_env + ';' + mois_env + ';' + noise_env + ';' +
+                             distance + ';' + people_count + "\r\n";
+
+            Serial.print(RaspberryChain);
+
+            contPerson = 0;
+
+            break;
+
+        case READ_EVENT_CMD:
+            /* code */
+
+            // compose the data
+            temp_env = String(temp_env_val, 1);
+            mois_env = String(mois_env_val, 1);
+            typeSample = String(T_EVENT);
+            noise_env = String(noise_env_val, 1);
+            distance = '[' + String(distance_val, 1) + ',' + String(temp_dist_val, 1) + ']';
+            people_count = "1.0";
+
+            RaspberryChain = place + ';' + monitor + ';' + typeSample + ';' +
+                             temp_env + ';' + mois_env + ';' + noise_env + ';' +
+                             distance + ';' + people_count + "\r\n";
+
+            Serial.print(RaspberryChain);
+
+            break;
+
+        case ALIVE_CMD:
+            /* code */
+
+            Serial.println("Alive");
+
+            break;
+
+        default:
+            break;
+        }
+    }
+}
+
 ISR(TIMER1_COMPA_vect)
 { // timer1 interrupt 1Hz toggles pin 13 (LED)
   // generates pulse wave of frequency 1Hz/2 = 0.5kHz (takes two cycles for full wave- toggle high then toggle low)
