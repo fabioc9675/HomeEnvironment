@@ -19,6 +19,10 @@
             "includePath": [
                 "/Applications/Arduino.app/Contents/Java/hardware/arduino/avr/cores/arduino",
                 "/Applications/Arduino.app/Contents/Java/hardware/arduino/avr/variants/mega",
+                "/Users/fabiancastano/Documents/Arduino/libraries/DHT_sensor_library",
+                "/Users/fabiancastano/Documents/Arduino/libraries/OneWire",
+                "/Users/fabiancastano/Documents/Arduino/libraries/DallasTemperature",
+                "/Users/fabiancastano/Documents/Arduino/libraries/Adafruit_Unified_Sensor",
                 "/Applications/Arduino.app/Contents/Java/hardware/tools/avr/lib/gcc/avr/7.3.0/include",
                 "/Applications/Arduino.app/Contents/Java/hardware/tools/avr/lib/gcc/avr/7.3.0/include-fixed",
                 "/Applications/Arduino.app/Contents/Java/hardware/tools/avr/avr/include"

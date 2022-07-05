@@ -13,6 +13,15 @@
 
 #include "initializer.h"
 #include "timer.h"
+#include "dataSample.h"
+
+// Reading of air temperature and humidity
+#include <DHT.h>
+#include <stdio.h>
+
+// Reading soil temperature
+#include <OneWire.h>           // incluir  1-Wire y Dallas Temperature
+#include <DallasTemperature.h> //  que son librerías
 
 /* ********************************************************************
  * **** DEFINES
@@ -27,12 +36,20 @@
 // Variables to acquire the parameters of the greenhouse
 String place;
 String monitor;
+String typeSample; // cand be EVENT or SAMPLE
 String temp_env;
 String mois_env;
 String noise_env;
-String temp_dist;
 String distance;
 String people_count;
+
+// variables to register data
+float temp_env_val;
+float mois_env_val;
+float noise_env_val;
+float temp_dist_val;
+float distance_val;
+float people_count_val;
 
 // String to send data to the Raspberry
 String RaspberryChain;
@@ -51,6 +68,10 @@ bool LED_STATE = true;
 /* ********************************************************************
  * **** PROTOTYPES
  * ********************************************************************/
+DHT dht(DHTPIN, DHT11);
+
+OneWire oneWire(ONE_WIRE_BUS); // 1-Wire bus
+DallasTemperature sensors(&oneWire);
 
 /* ********************************************************************
  * **** FUNCTIONS
@@ -67,10 +88,16 @@ void setup()
     init_Timer();
     init_TextPayload();
 
+    dht.begin();
+    sensors.begin();
+
     pinMode(LED_BUILTIN, OUTPUT);
     pinMode(LED_NMOV, OUTPUT);
     pinMode(LED_SMOV, OUTPUT);
     pinMode(PIR_SENSOR, INPUT);
+
+    pinMode(TRIG_PIN, OUTPUT);
+    pinMode(ECHO_PIN, INPUT);
 }
 
 // loop function
@@ -96,12 +123,53 @@ void loop()
         statePerson = 1;
         contPerson++;
 
-        Serial.print("Personas = ");
-        Serial.println(contPerson);
+        // Serial.print("Personas = ");
+        // Serial.println(contPerson);
+
+        // compose the data
+        dataRandGenerator();
+
+        temp_env = String(temp_env_val, 1);
+        mois_env = String(mois_env_val, 1);
+        typeSample = String(T_EVENT);
+        noise_env = String(noise_env_val, 1);
+        distance = '[' + String(distance_val, 1) + ',' + String(temp_dist_val, 1) + ']';
+        people_count = String(people_count_val, 0);
+
+        RaspberryChain = place + ';' + monitor + ';' + typeSample + ';' +
+                         temp_env + ';' + mois_env + ';' + noise_env + ';' +
+                         distance + ';' + people_count + "\r\n";
+
+        Serial.print(RaspberryChain);
     }
     else if (digitalRead(PIR_SENSOR) == LOW)
     {
         statePerson = 0;
+    }
+
+    if (flagSample == true)
+    {
+        flagSample = false;
+
+        // generate data random to test communication
+        dataRandGenerator();
+
+        // compose the data
+
+        temp_env = String(temp_env_val, 1);
+        mois_env = String(mois_env_val, 1);
+        typeSample = String(T_SAMPLE);
+        noise_env = String(noise_env_val, 1);
+        distance = '[' + String(distance_val, 1) + ',' + String(temp_dist_val, 1) + ']';
+        people_count = String(people_count_val, 0);
+
+        RaspberryChain = place + ';' + monitor + ';' + typeSample + ';' +
+                         temp_env + ';' + mois_env + ';' + noise_env + ';' +
+                         distance + ';' + people_count + "\r\n";
+
+        Serial.print(RaspberryChain);
+
+        contPerson = 0;
     }
 }
 
