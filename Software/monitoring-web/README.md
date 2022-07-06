@@ -21,11 +21,12 @@ routes: contains routing between code
 - `npm install mongoose` allows to connect withh database
 - `npm install dotenv` allows to load environment variables
 - `npm install cors` to work with cors
+- `npm install nodemon -D` to automatically restart server when the code
+- `npm install concurrently` run concurrently server and frontend
 
 ### Frontend dependencies
 
-- `npm install nodemon -D` to automatically restart server when the code
-- `npm install concurrently` run concurrently server and frontend
+- `npm install react axios` to connect with server
 
 ## Steps
 
