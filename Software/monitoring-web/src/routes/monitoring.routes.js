@@ -37,7 +37,7 @@ router.post("/", async (req, res, next) => {
   });
   console.log(monitorObj);
   // Post the data
-  await Monitor.save();
+  await monitorObj.save();
   res.json({ status: "Monitoring Data Recorded" });
 });
 

@@ -17,6 +17,8 @@ routes: contains routing between code
 
 - `npm install express` framework for nodejs
 - `npm install mongoose` allows to connect withh database
+- `npm install dotenv` allows to load environment variables
+- `npm install cors` to work with cors
 
 ## Steps
 
@@ -24,3 +26,4 @@ routes: contains routing between code
 2. Setting up the Node Server
 3. Creating the Routes
 4. Defining the Models
+5. Connection to a Database
