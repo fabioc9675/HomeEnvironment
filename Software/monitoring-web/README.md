@@ -16,9 +16,11 @@ routes: contains routing between code
 ## Modules
 
 - `npm install express` framework for nodejs
+- `npm install mongoose` allows to connect withh database
 
 ## Steps
 
 1. Setting up the Application
 2. Setting up the Node Server
 3. Creating the Routes
+4. Defining the Models
