@@ -15,10 +15,17 @@ routes: contains routing between code
 
 ## Modules
 
+### Backend dependencies
+
 - `npm install express` framework for nodejs
 - `npm install mongoose` allows to connect withh database
 - `npm install dotenv` allows to load environment variables
 - `npm install cors` to work with cors
+
+### Frontend dependencies
+
+- `npm install nodemon -D` to automatically restart server when the code
+- `npm install concurrently` run concurrently server and frontend
 
 ## Steps
 
@@ -27,3 +34,5 @@ routes: contains routing between code
 3. Creating the Routes
 4. Defining the Models
 5. Connection to a Database
+6. Testing the API
+7. Creating the Frontend
