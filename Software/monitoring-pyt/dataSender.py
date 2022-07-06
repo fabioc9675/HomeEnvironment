@@ -12,7 +12,9 @@ import time
 from dotenv import load_dotenv  # import dotenv variables
 import requests  # Allows to connect with MongoDB
 
-# Function to handle serial events
+"""
+Function to handle serial events
+"""
 
 
 def serialReadEvent(dev):
@@ -23,6 +25,42 @@ def serialReadEvent(dev):
     elif dev.in_waiting > 7:
         isEvent = "isData"
     return isEvent
+
+
+"""
+Function to decode data and convert to JSON structure
+"""
+
+
+def decomposeData(data):
+    # decode data into string
+    decodeData = data[0:len(data)-2].decode("utf-8")
+    # Split data in a list
+    dataList = decodeData.split(';')
+    # print(dataList)
+
+    # decompose the data
+    place = dataList[0]
+    monitor = int(dataList[1])
+    typeDat = dataList[2]
+    temp_env = float(dataList[3])
+    mois_env = float(dataList[4])
+    noise_env = float(dataList[5])
+    distance = [float(item) for item in dataList[6][1:-1].split(',')]
+    nPerson = int(float(dataList[7]))
+
+    mongoObj = {
+        "place": place,
+        "monitor": monitor,
+        "typeDat": typeDat,
+        "temp_env": temp_env,
+        "mois_env": mois_env,
+        "noise_env": noise_env,
+        "distance": distance,
+        "nPerson": nPerson,
+    }
+
+    return mongoObj
 
 
 def main():
@@ -57,7 +95,8 @@ def main():
                 isEvent = "False"
                 data = dev.readline()
                 # print("isData")
-                print(data)
+                mongoObj = decomposeData(data)
+                print(mongoObj)
 
             # sample every 20 seconds
             if (sampleTime - time.time() % sampleTime) <= 1:
