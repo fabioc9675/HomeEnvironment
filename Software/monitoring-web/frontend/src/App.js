@@ -1,9 +1,28 @@
-function App() {
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+export default function App() {
+  const [data, setData] = useState("Hello Fabian!");
+
+  // it is to do something when application load
+  useEffect(() => {
+    loadDataFromDB();
+  }, []);
+
+  function loadDataFromDB() {
+    axios
+      .get("/api/monitoring/")
+      .then((res) => {
+        console.log(res.data);
+        setData(JSON.stringify(res.data));
+      })
+      .catch((err) => console.error(err));
+  }
+
   return (
     <div className="App">
-      <h1>Hello World!</h1>
+      <h1>Hello World</h1>
+      <p>{data}</p>
     </div>
   );
 }
-
-export default App;
