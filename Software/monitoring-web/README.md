@@ -30,6 +30,9 @@ routes: contains routing between code
 - `npm install react axios` to connect with server
 - `npm install react-router react-router-dom` to use router in Application
 - `npm install socket.io-client` Package to add socket io functionallity
+- `npm install react-bootstrap bootstrap` use bootstrap components
+- `npm install moment` use date time formater
+- `npm install react-icons --save` Icons https://react-icons.github.io/react-icons/
 
 ## Steps
 
