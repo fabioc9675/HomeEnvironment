@@ -68,8 +68,9 @@ def main():
     load_dotenv()
 
     SERIAL_PORT = os.getenv('SERIAL_PORT')  # Serial port address
+    APPLICATION_URL = os.getenv('APPLICATION_URL')  # URL to POST
 
-    sampleTime = 20  # 20 seconds
+    sampleTime = 300  # 20 seconds
 
     try:
         # make the connection with the device
@@ -97,6 +98,10 @@ def main():
                 # print("isData")
                 mongoObj = decomposeData(data)
                 print(mongoObj)
+
+                # method to insert document into database
+                result = requests.post(APPLICATION_URL, json=mongoObj)
+                print(result.text)
 
             # sample every 20 seconds
             if (sampleTime - time.time() % sampleTime) <= 1:
