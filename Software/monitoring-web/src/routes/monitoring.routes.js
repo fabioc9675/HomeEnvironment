@@ -12,6 +12,45 @@ router.get("/", async (req, res, next) => {
   res.json(monitorObj);
 });
 
+// ***************************************************************
+// ****** Additional routes to get data **************************
+// ***************************************************************
+
+// reading data by id
+router.get("/id/:id", async (req, res) => {
+  // make a request to the database
+  const monitorObj = await Monitor.findById(req.params.id);
+  // when client ask for '/' server response
+  res.json(monitorObj);
+});
+
+// reading last data by place
+router.get("/last/place/:place", async (req, res) => {
+  // make a request to the database
+  // Examples
+  // http://localhost:5000/api/monitoring/last/place/FABIAN
+  const place = req.params.place;
+  const monitorObj = await Monitor.find({ place: place })
+    .limit(1)
+    .sort({ $natural: -1 });
+  res.json(monitorObj);
+});
+
+// reading data by typeDat
+router.get("/place/:place/typeDat/:typeDat", async (req, res) => {
+  // make a request to the database
+  // Examples
+  // http://localhost:5000/api/monitoring/place/FABIAN/typeDat/EVENT
+  const place = req.params.place;
+  const typeDat = req.params.typeDat;
+  const monitorObj = await Monitor.find({
+    place: place,
+    typeDat: typeDat,
+  }).sort({ createdAt: 1 });
+  // response
+  res.json(monitorObj);
+});
+
 // Posting data into database  // {'place': 'FABIAN', 'monitor': 1, 'typeDat': 'SAMPLE', 'temp_env': 24.0, 'mois_env': 46.0, 'noise_env': 430.2, 'distance': [17.0, 23.8], 'nPerson': 2}
 router.post("/", async (req, res, next) => {
   // make a posting to the database
