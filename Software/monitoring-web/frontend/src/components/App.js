@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { axiosInstance } from "../config/config";
+import React from "react";
+import Home from "./Home";
+import Query from "./Query";
+
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 
 export default function App() {
-  const [data, setData] = useState("Hello Fabian!");
-
-  // it is to do something when application load
-  useEffect(() => {
-    loadDataFromDB();
-  }, []);
-
-  function loadDataFromDB() {
-    axiosInstance
-      .get("/api/monitoring/")
-      .then((res) => {
-        console.log(res.data);
-        setData(JSON.stringify(res.data));
-      })
-      .catch((err) => console.error(err));
-  }
-
   return (
     <div className="App">
-      <h1>Hello World</h1>
-      <p>{data}</p>
+      <div>
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/dataQuery" element={<Query />} />
+          </Routes>
+        </Router>
+      </div>
     </div>
   );
 }
