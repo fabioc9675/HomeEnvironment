@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 import { useNavigate } from "react-router";
 import { axiosInstance } from "../config/config";
 
@@ -10,6 +11,14 @@ export default function Query() {
 
   // it is to do something when application load
   useEffect(() => {
+    // create the socket in the client
+    const socket = io(axiosInstance.getUri(), { transports: ["websocket"] });
+    // initialization of socket io in the client side
+    socket.on("notify", (message) => {
+      console.log(message);
+      loadDataFromDB();
+    });
+
     loadDataFromDB();
   }, []);
 
