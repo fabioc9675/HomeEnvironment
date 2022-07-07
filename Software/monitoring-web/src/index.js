@@ -28,7 +28,10 @@ app.use(express.json()); // every data that arrives to the server enters to this
 app.use("/api/monitoring", require("./routes/monitoring.routes")); // adding prefix to the route
 
 // Static files
-app.use(express.static(path.join(__dirname, "public"))); // adding prefix to the route
+app.use(express.static(path.join(__dirname, "../frontend/build"))); // adding prefix to the route
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build", "index.html")); // Heroku creates the build for us
+});
 
 // Connect to the database
 mongoose
