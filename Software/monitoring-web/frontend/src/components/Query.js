@@ -3,7 +3,11 @@ import { io } from "socket.io-client";
 import { useNavigate } from "react-router";
 import { axiosInstance } from "../config/config";
 
-export default function Query() {
+export default function Query(props) {
+  // component props
+  const { place, typeDat } = props;
+
+  // Hooks of data
   const [data, setData] = useState("Hello Fabian!");
 
   // URL history
@@ -24,7 +28,7 @@ export default function Query() {
 
   function loadDataFromDB() {
     axiosInstance
-      .get("/api/monitoring/")
+      .get(`/api/monitoring/place/${place}/typeDat/${typeDat}`)
       .then((res) => {
         console.log(res.data);
         setData(JSON.stringify(res.data));

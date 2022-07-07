@@ -6,16 +6,25 @@ export default function Home() {
   const navigate = useNavigate();
 
   // function to handle click
-  function HandleClick() {
+  function HandleClick(e) {
     // alert("se presiono la etiqueta");
+    // console.log(e.target.id);
 
-    navigate("/dataQuery");
+    if (e.target.id === "1") {
+      navigate("/dataQueryEvent");
+    }
+    if (e.target.id === "2") {
+      navigate("/dataQuerySample");
+    }
   }
 
   return (
     <div>
-      <h3 key="1" onClick={HandleClick}>
-        Ingrese a los datos
+      <h3 id="1" onClick={(e) => HandleClick(e)}>
+        Ingrese a Eventos
+      </h3>
+      <h3 id="2" onClick={(e) => HandleClick(e)}>
+        Ingrese a Muestras
       </h3>
     </div>
   );

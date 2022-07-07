@@ -11,7 +11,16 @@ export default function App() {
         <Router>
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route exact path="/dataQuery" element={<Query />} />
+            <Route
+              exact
+              path="/dataQueryEvent"
+              element={<Query place="FABIAN" typeDat="EVENT" />}
+            />
+            <Route
+              exact
+              path="/dataQuerySample"
+              element={<Query place="FABIAN" typeDat="SAMPLE" />}
+            />
           </Routes>
         </Router>
       </div>
