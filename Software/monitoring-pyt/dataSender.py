@@ -68,7 +68,8 @@ def main():
     load_dotenv()
 
     SERIAL_PORT = os.getenv('SERIAL_PORT')  # Serial port address
-    APPLICATION_URL = os.getenv('APPLICATION_URL')  # URL to POST
+    # APPLICATION_URL = os.getenv('APPLICATION_URL')  # URL to POST
+    APPLICATION_URL = os.getenv('LOCAL_URL')  # URL to POST
 
     sampleTime = 300  # 20 seconds
 
