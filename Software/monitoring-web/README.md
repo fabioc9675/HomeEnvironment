@@ -27,6 +27,7 @@ routes: contains routing between code
 ### Frontend dependencies
 
 - `npm install react axios` to connect with server
+- `npm install react-router react-router-dom` to use router in Application
 
 ## Steps
 
