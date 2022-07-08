@@ -4,13 +4,17 @@ import { useNavigate } from "react-router";
 import { axiosInstance } from "../config/config";
 import DataTable from "./DataTable";
 import moment from "moment";
+import { Card, Container, Navbar } from "react-bootstrap";
 
 export default function Query(props) {
   // component props
-  const { place, typeDat } = props;
+  const { place, typeDat, title } = props;
 
   // Hooks of data
   const [data, setData] = useState("Hello Fabian!");
+  const [tempC, setTempC] = useState(0);
+  const [humidity, setHumidity] = useState(0);
+  const [distanceC, setDistanceC] = useState(0);
   const [monitorObj, setMonitorObj] = useState([
     {
       _id: 1,
@@ -50,6 +54,9 @@ export default function Query(props) {
           dataM[i].hour = moment(new Date(dataM[i].createdAt)).format("lll");
         }
         setMonitorObj(dataM);
+        setTempC(dataM.slice(-1)[0].temp_env + " ºC");
+        setHumidity(dataM.slice(-1)[0].mois_env + " %");
+        setDistanceC(dataM.slice(-1)[0].distance[0] + " cm");
       })
       .catch((err) => console.error(err));
   }
@@ -63,8 +70,38 @@ export default function Query(props) {
 
   return (
     <div className="App">
-      <h1 onClick={HandleClick}>Hello World</h1>
-      <DataTable data={monitorObj} />
+      <Navbar bg="light">
+        <Container>
+          <Navbar.Brand onClick={HandleClick}>Home Monitoring</Navbar.Brand>
+        </Container>
+      </Navbar>
+
+      <Container className="p-3 ">
+        <h3 className="header" onClick={HandleClick}>
+          {title}
+        </h3>
+        <Container className="p-5 mb-4 bg-light rounded-3">
+          <Card>
+            <Card.Header>Temperatura</Card.Header>
+            <Card.Body>
+              <Card.Text>{tempC}</Card.Text>
+            </Card.Body>
+          </Card>
+          <Card>
+            <Card.Header>Humedad</Card.Header>
+            <Card.Body>
+              <Card.Text>{humidity}</Card.Text>
+            </Card.Body>
+          </Card>
+          <Card>
+            <Card.Header>Distancia</Card.Header>
+            <Card.Body>
+              <Card.Text>{distanceC}</Card.Text>
+            </Card.Body>
+          </Card>
+        </Container>
+        <DataTable data={monitorObj} />
+      </Container>
     </div>
   );
 }

@@ -14,12 +14,14 @@ export default function App() {
             <Route
               exact
               path="/dataQueryEvent"
-              element={<Query place="FABIAN" typeDat="EVENT" />}
+              element={<Query place="FABIAN" typeDat="EVENT" title="Eventos" />}
             />
             <Route
               exact
               path="/dataQuerySample"
-              element={<Query place="FABIAN" typeDat="SAMPLE" />}
+              element={
+                <Query place="FABIAN" typeDat="SAMPLE" title="Muestras" />
+              }
             />
           </Routes>
         </Router>

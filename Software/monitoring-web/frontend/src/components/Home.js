@@ -1,4 +1,5 @@
 import React from "react";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import { useNavigate } from "react-router";
 
 export default function Home() {
@@ -20,12 +21,20 @@ export default function Home() {
 
   return (
     <div>
-      <h3 id="1" onClick={(e) => HandleClick(e)}>
-        Ingrese a Eventos
-      </h3>
-      <h3 id="2" onClick={(e) => HandleClick(e)}>
-        Ingrese a Muestras
-      </h3>
+      <Navbar bg="light">
+        <Container>
+          <Navbar.Brand href="/">Home Monitoring</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Nav className="me-auto">
+            <Nav.Link id="1" onClick={(e) => HandleClick(e)}>
+              Ingrese a Eventos
+            </Nav.Link>
+            <Nav.Link id="2" onClick={(e) => HandleClick(e)}>
+              Ingrese a Muestras
+            </Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>
     </div>
   );
 }
