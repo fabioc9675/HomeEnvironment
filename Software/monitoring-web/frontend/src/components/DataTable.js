@@ -13,6 +13,7 @@ export default function DataTable(props) {
             <tr>
               <th>Fecha</th>
               <th>Temp. Amb.</th>
+              <th>Temp. Far.</th>
               <th>Hum. Amb.</th>
               <th>Ruido Amb.</th>
               <th>Distancia</th>
@@ -26,6 +27,7 @@ export default function DataTable(props) {
                 <tr key={monitorObj._id}>
                   <td>{monitorObj.hour} </td>
                   <td>{monitorObj.temp_env} ºC</td>
+                  <td>{monitorObj.temp_far} ºF</td>
                   <td>{monitorObj.mois_env} %</td>
                   <td>{monitorObj.noise_env}</td>
                   <td>{monitorObj.distance[0]} cm</td>
