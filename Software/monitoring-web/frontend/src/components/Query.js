@@ -81,24 +81,26 @@ export default function Query(props) {
           {title}
         </h3>
         <Container className="p-5 mb-4 bg-light rounded-3">
-          <Card>
-            <Card.Header>Temperatura</Card.Header>
-            <Card.Body>
-              <Card.Text>{tempC}</Card.Text>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Header>Humedad</Card.Header>
-            <Card.Body>
-              <Card.Text>{humidity}</Card.Text>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Header>Distancia</Card.Header>
-            <Card.Body>
-              <Card.Text>{distanceC}</Card.Text>
-            </Card.Body>
-          </Card>
+          <div className="d-flex flex-row">
+            <Card style={{ width: "30%" }}>
+              <Card.Header>Temperatura</Card.Header>
+              <Card.Body>
+                <Card.Text>{tempC}</Card.Text>
+              </Card.Body>
+            </Card>
+            <Card style={{ width: "30%" }}>
+              <Card.Header>Humedad</Card.Header>
+              <Card.Body>
+                <Card.Text>{humidity}</Card.Text>
+              </Card.Body>
+            </Card>
+            <Card style={{ width: "30%" }}>
+              <Card.Header>Distancia</Card.Header>
+              <Card.Body>
+                <Card.Text>{distanceC}</Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
         </Container>
         <DataTable data={monitorObj} />
       </Container>
