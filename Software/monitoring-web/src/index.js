@@ -35,6 +35,14 @@ app.use(express.json()); // every data that arrives to the server enters to this
 
 // Routes
 app.use("/api/monitoring", require("./routes/monitoring.routes")); // adding prefix to the route
+app.use(
+  "/api/model/temperature",
+  express.static(path.join(__dirname, "tfmodel/model.json")) // adding model prefix
+);
+// add this,
+// to allow access to the `tfmodel` folder from `api/tfmodel` for
+// the shards to be accessible
+app.use("/api/model", express.static(path.join(__dirname, "tfmodel")));
 
 // Static files for development
 app.use(express.static(path.join(__dirname, "../frontend/public"))); // adding prefix to the route
