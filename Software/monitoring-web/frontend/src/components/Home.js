@@ -17,6 +17,26 @@ export default function Home() {
     if (e.target.id === "2") {
       navigate("/dataQuerySample");
     }
+    // with this code we can to send notifications to a EXPO APP
+    if (e.target.id === "3") {
+      fetch(`https://exp.host/--/api/v2/push/send`, {
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify({
+          to: "ExponentPushToken[fCNPY6CTYJaeQR2yV2Wr6S]",
+          title: "Hola Fabian",
+          body: "Este es un mensaje desde la aplicacion Web",
+        }),
+      })
+        .then((res) => {
+          res.json().then((data) => {
+            console.log(data);
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   return (
@@ -31,6 +51,9 @@ export default function Home() {
             </Nav.Link>
             <Nav.Link id="2" onClick={(e) => HandleClick(e)}>
               Ingrese a Muestras
+            </Nav.Link>
+            <Nav.Link id="3" onClick={(e) => HandleClick(e)}>
+              Generar Notificación
             </Nav.Link>
           </Nav>
         </Container>
