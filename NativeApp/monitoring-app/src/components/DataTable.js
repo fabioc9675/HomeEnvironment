@@ -41,6 +41,7 @@ export default function DataTable(props) {
               </View>
             );
           }}
+          stickyHeaderIndices={[0]}
         />
       </View>
     </View>
@@ -51,6 +52,8 @@ const styles = StyleSheet.create({
   table: {
     flexDirection: "row",
     flexWrap: "wrap",
+    borderBottomWidth: 3,
+    borderBottomColor: "white",
   },
   text: {
     flex: 1,

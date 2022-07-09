@@ -53,7 +53,13 @@ export default function Home(props) {
   return (
     <View style={{ width: "100%", height: "70%" }}>
       <DataTable data={data} />
-      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around",
+          paddingVertical: 10,
+        }}
+      >
         <Button
           style={{ paddingHorizontal: 20 }}
           onPress={handlePressSample}
