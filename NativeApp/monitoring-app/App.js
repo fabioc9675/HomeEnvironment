@@ -6,7 +6,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Home Monitoring App</Text>
-      <Home place="FABIAN" typeDat="SAMPLE" />
+      <Home place="FABIAN" />
       <StatusBar style="auto" />
     </View>
   );

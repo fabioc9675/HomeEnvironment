@@ -15,15 +15,19 @@ const url = "https://homemonitoring-web.herokuapp.com";
 
 export default function Home(props) {
   // state variables
-  const { place, typeDat } = props;
+  const { place } = props;
   const [data, setData] = useState([]);
 
-  function handlePress() {
-    getJsonData();
+  function handlePressSample() {
+    getJsonData("SAMPLE");
+  }
+
+  function handlePressEvent() {
+    getJsonData("EVENT");
   }
 
   // load data from API endpoint
-  function getJsonData() {
+  function getJsonData(typeDat) {
     fetch(`${url}/api/monitoring/place/${place}/typeDat/${typeDat}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -49,7 +53,18 @@ export default function Home(props) {
   return (
     <View style={{ width: "100%", height: "70%" }}>
       <DataTable data={data} />
-      <Button onPress={handlePress} title="Cargar"></Button>
+      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+        <Button
+          style={{ paddingHorizontal: 20 }}
+          onPress={handlePressSample}
+          title="Cargar Muestras"
+        ></Button>
+        <Button
+          style={{ paddingHorizontal: 20 }}
+          onPress={handlePressEvent}
+          title="Cargar Eventos"
+        ></Button>
+      </View>
     </View>
   );
 }
