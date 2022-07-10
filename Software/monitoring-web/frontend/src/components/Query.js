@@ -5,14 +5,22 @@ import { axiosInstance } from "../config/config";
 import DataTable from "./DataTable";
 import moment from "moment";
 import { Card, Container, Navbar } from "react-bootstrap";
+import * as tf from "@tensorflow/tfjs";
+
+// Model and metadata URL
+const url = {
+  model: axiosInstance.getUri() + "api/model/temperature",
+};
 
 export default function Query(props) {
   // component props
   const { place, typeDat, title } = props;
 
   // Hooks of data
+  const [model, setModel] = useState();
   const [data, setData] = useState("Hello Fabian!");
   const [tempC, setTempC] = useState(0);
+  const [tempF, setTempF] = useState(0);
   const [humidity, setHumidity] = useState(0);
   const [distanceC, setDistanceC] = useState(0);
   const [monitorObj, setMonitorObj] = useState([
@@ -31,6 +39,11 @@ export default function Query(props) {
 
   // it is to do something when application load
   useEffect(() => {
+    // load tensorflow model
+    tf.ready().then(() => {
+      loadModel(url);
+    });
+
     // create the socket in the client
     const socket = io(axiosInstance.getUri(), { transports: ["websocket"] });
     // initialization of socket io in the client side
@@ -39,8 +52,35 @@ export default function Query(props) {
       loadDataFromDB();
     });
 
-    loadDataFromDB();
+    // loadDataFromDB();
   }, []);
+
+  // wait for load model
+  useEffect(() => {
+    loadDataFromDB();
+  }, [model]);
+
+  // Load Model
+  async function loadModel(url) {
+    try {
+      const tfmod = await tf.loadLayersModel(url.model);
+      await setModel(tfmod);
+      console.log("model loaded");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // make a regression with the model
+  function makeRegression(temp) {
+    if (model != null) {
+      const tensor = tf.tensor1d([temp]);
+      const prediction = model.predict(tensor).dataSync();
+      console.log(prediction);
+      return Math.round(prediction);
+    }
+    return 0;
+  }
 
   function loadDataFromDB() {
     axiosInstance
@@ -51,6 +91,8 @@ export default function Query(props) {
         // fill data array with the data
         var dataM = res.data;
         for (var i = 0; i < dataM.length; i++) {
+          // make a regression of temp with tensorflow model
+          dataM[i].temp_far = makeRegression(dataM[i].temp_env);
           dataM[i].hour = moment(new Date(dataM[i].createdAt)).format("lll");
         }
         setMonitorObj(dataM);

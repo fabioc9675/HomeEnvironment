@@ -33,6 +33,7 @@ routes: contains routing between code
 - `npm install react-bootstrap bootstrap` use bootstrap components
 - `npm install moment` use date time formater
 - `npm install react-icons --save` Icons https://react-icons.github.io/react-icons/
+- `npm install @tensorflow/tfjs` to load tensorflow models
 
 ## Steps
 
