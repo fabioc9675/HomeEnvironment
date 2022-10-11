@@ -6,6 +6,7 @@ import DataTable from "./DataTable";
 import moment from "moment";
 import { Card, Container, Navbar } from "react-bootstrap";
 import * as tf from "@tensorflow/tfjs";
+import DataChart from "./DataChart";
 
 // Model and metadata URL
 const url = {
@@ -144,6 +145,7 @@ export default function Query(props) {
             </Card>
           </div>
         </Container>
+        <DataChart data={monitorObj} />
         <DataTable data={monitorObj} />
       </Container>
     </div>
